@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css" />
+    <link rel="stylesheet" type="text/css" href="css/here.css" />
+</head>
+<body>
+<div id="mapid">
+
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div>
+            <form action="/upload" id="mediaform">
+                <label>Kuva, ääni tai video
+                    <input type="file" name="mediafile" accept="audio/*,video/*,image/*">
+                </label>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+            <img src ="http://placekitten.com/200/300">
+        </div>
+        <button  onclick="Cordinates()">SEND THE BALL AWAY!!!!</button>
+        <p>Some text in the Modal..</p>
+    </div>
+
+</div>
+
+
+
+<script src="js/here.js"></script>
+</body>
+</html>

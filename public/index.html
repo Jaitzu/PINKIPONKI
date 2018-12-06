@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Title</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="modules/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+<nav>
+    <a href="./logout" class="button">Logout</a>
+</nav>
+<h1>Add Image</h1>
+<form action="/upload" id="mediaform">
+    <input type="text" name="category" placeholder="Category">
+    <br>
+    <input type="text" name="title" placeholder="Title">
+    <br>
+    <input type="text" name="details" placeholder="Details">
+    <br>
+    <label>Kuva, ääni tai video
+        <input type="file" name="mediafile" accept="audio/*,video/*,image/*">
+    </label>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+<h1>Update Image</h1>
+<form action="/images" id="updateform">
+    <input type="text" name="category" placeholder="Category">
+    <br>
+    <input type="text" name="title" placeholder="Title">
+    <br>
+    <input type="text" name="details" placeholder="Details">
+    <br>
+    <input type="hidden" name="mID">
+    <button type="submit" disabled>Submit</button>
+</form>
+<br>
+<h1>Search by  category</h1>
+<form action="/images" id="photohaku">
+    <input type="text" name="category" placeholder="Category">
+    <br>
+    <button type="submit">Submit</button>
+</form>
+<br>
+<nav>
+    <div id="categories">
+
+    </div>
+    <div>
+        <button id="reset-button">Reset</button>
+    </div>
+</nav>
+
+<div>
+    <ul id="imagelist">
+
+    </ul>
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>
