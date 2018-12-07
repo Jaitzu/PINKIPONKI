@@ -25,7 +25,7 @@ var map = new H.Map(  //kartan initilaatio
     mapPlaceholder,
     defaultLayers.normal.map,
     mapOptions);
-map.setBaseLayer(defaultLayers.satellite.traffic);
+map.setBaseLayer(defaultLayers.terrain.traffic);
 
 window.addEventListener('resize', function () { //kartta sopeutuu ikkunaan
     map.getViewPort().resize();
@@ -37,7 +37,7 @@ var iconUrl = 'honri.png';//MArkerin luonti
 
 var iconOptions = {
 // The icon's size in pixel:
-    size: new H.math.Size(26, 34),
+    size: new H.math.Size(36, 44),
 // The anchorage point in pixel,
 // defaults to bottom-center
     anchor: new H.math.Point(14, 34),
@@ -67,7 +67,7 @@ function Cordinates() {
     pallo.setPosition(korts);
     console.log('vittu' +cords)
 }
-
+var keskitys = 0;
 //markerin ja pallon sijainnin päivitys
     function updatePosition(event) {
          var HEREHQcoordinates = {
@@ -75,8 +75,9 @@ function Cordinates() {
             lng: event.coords.longitude
         };
         marker.setPosition(HEREHQcoordinates);
-        map.setCenter(HEREHQcoordinates);
-
+        if(keskitys === 0) {
+            map.setCenter(HEREHQcoordinates);
+        }
 
     }
 
@@ -96,36 +97,69 @@ function baall() {
 // iterate over objects and calculate distance between them
     for (i = 1; i < len; i += 1) {
         markerDist = objects[i].getPosition().distance((marker.getPosition()));
-        console.log(markerDist);
+
         if (markerDist < minDist) {
             markerDist = minDist;
             modaali();
             console.log('pallo on napattu saatana');
         }
     }
-    setInterval(baall, 1000);
+    setInterval(baall, 4000);
 }
 
 baall();
 
+
+//PALLONKAAPPAUS MODAALI
 // Get the modal
     var modal = document.getElementById('myModal');
-
-
 // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
-
 // When the user clicks on the button, open the modal
     function modaali() {
-        modal.style.display = "block";
+        const pallomodaali = document.getElementById("kaappausModal");
+        pallomodaali.style.display = "flex";
 
     }
 
 
 // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
-        modal.style.display = "none";
+        const pallomodaali = document.getElementById("myModal");
+        pallomodaali.style.display = "none";
     };
+//menun avaus ja sulkeminen
+var timesClicked =0;
+function xFunction(x) {
+    timesClicked+=1;
+    console.log(timesClicked);
+    if(timesClicked > 1){
+        x.classList.toggle("change");
+        const menumodaali = document.getElementById("menuModal");
+        menumodaali.style.display = "none";
+        const äxä = document.getElementById("äxä")
+        äxä.style.zIndex = "1";
+        timesClicked =0;
+    }
+    else {
+        x.classList.toggle("change");
+        const menumodaali = document.getElementById("menuModal");
+        menumodaali.style.display = "flex";
+        const äxä = document.getElementById("äxä")
+        äxä.style.zIndex = "2";
+
+    }
 
 
+}
 
+function keski(){
+    keskitys = 0;
+}
+
+// When the user clicks anywhere on the map its stops centering the screen to your location until user clicks the centering button
+const mappi =document.getElementById("mapid")
+mappi.onclick = function() {
+    keskitys = 1;
+
+} ;

@@ -4,6 +4,39 @@ body{
     position: absolute;
     margin:0;
     padding:0;
+    display:flex;
+}
+
+.container {
+    display: inline-block;
+    cursor: pointer;
+    z-index: 1;
+    position: absolute;
+    margin-left: 3ex;
+    margin-top: 3ex;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+.container:active{
+    z-index: 2;
 }
 #mapid {
     width: 100%;
@@ -13,8 +46,10 @@ body{
     padding:0;
 }
 
-/* The Modal (background) */
-.modal {
+
+#menuModal {
+    justify-content: center;
+    align-items: center;
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -26,12 +61,170 @@ body{
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+#menuContent{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: space-around;
+    flex-flow: wrap;
+}
+#menuList{
+    height: 80%;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: #333333;
+    flex-flow: wrap;
 
-/* Modal Content/Box */
-.modal-content {
+}
+.menulink{
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    border: black;
+    border-radius: 10px;
+    margin: 5px;
+
+}
+#logout{
+    height: 30%;
+}
+
+#kaappausModal {
+    justify-content: center;
+    align-items: center;
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    flex-flow: wrap;
+}
+#kaappauscontent{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: space-around;
+    flex-flow: wrap;
+    padding: 0;
+    margin: 0;
+}
+#kaapausList{
+    height: 95%;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: #333333;
+
+
+
+}
+.kaappauslink{
+    background-color: #fefefe;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    border: black;
+    border-radius: 10px;
+    margin: 5px;
+
+}
+form{
+    max-width: 100%;
+    max-height: 20%;
+}
+#pallokuva{
+    max-height: 60%;
+    max-width: 100%;
+}
+img{
+    max-height: 100%;
+    max-width: 100%;
+}
+.addpic{
+    max-height: 50%;
+    min-height: 50%;
+    min-width:100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+}
+#potku{
+    max-height: 15%;
+    min-height: 15%;
+    max-width:100%;
+   min-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    align-self: end;
+    margin-top: 2px;
+
+}
+#kuvateksti{
+    padding: 0;
+    margin: 0;
+
+}
+#keskitys {
+    z-index: 1;
+    background-color: gray;
+    border: none;
+    color: white;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    border-radius: 100%;
+    position: absolute;
+    width: 9ex;
+    height: 9ex;
+    align-self: flex-end;
+    float: right;
+}
+#keskitys:hover{
+    z-index: 1;
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    border-radius: 100%;
+    position: absolute;
+    width: 9ex;
+    height: 9ex;
+    align-self: flex-end;
+    float: right;
 }

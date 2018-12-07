@@ -11,32 +11,57 @@
     <link rel="stylesheet" type="text/css" href="css/here.css" />
 </head>
 <body>
+<div id="äxä" class="container" onclick="xFunction(this)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+</div>
+
 <div id="mapid">
 
 </div>
-
+<button  id="keskitys" onclick="keski()">50%</button>
 <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="kaappausModal" class="modal">
 
     <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div>
-            <form action="/upload" id="mediaform">
-                <label>Kuva, ääni tai video
-                    <input type="file" name="mediafile" accept="audio/*,video/*,image/*">
-                </label>
-                <br>
-                <button type="submit">Submit</button>
-            </form>
+    <div id="kaappauscontent">
+        <div id="kaapausList">
+            <div id="pallokuva">
             <img src ="http://placekitten.com/200/300">
+            </div>
+            <div id="kuvatekstikotelo">
+                <p id="kuvateksti">Some text in the Modal..</p>
+            </div>
+            <form action="/upload" id="mediaform">
+
+                    <input class="addpic" type="file" name="mediafile" accept="image/*">
+
+                <br>
+                <button class="addpic" type="submit">Submit</button>
+            </form>
+            <button  id="potku" onclick="Cordinates()">SEND THE BALL AWAY!!!!</button>
         </div>
-        <button  onclick="Cordinates()">SEND THE BALL AWAY!!!!</button>
-        <p>Some text in the Modal..</p>
+
     </div>
 
 </div>
 
+<!-- menu Modal -->
+<div id="menuModal" class="modal">
+
+    <!-- Modal content -->
+    <div id="menuContent">
+        <div id="menuList">
+            <a href="#home" class="menulink">Profiili</a>
+            <a href="#about" class="menulink">About</a>
+            <button id="logout">Logout</button>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 <script src="js/here.js"></script>
