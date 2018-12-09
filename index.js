@@ -97,7 +97,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // authentication with custom callback (http://www.passportjs.org/docs/authenticate/)
-app.post('/login', function(req, res, next) {
+app.post('./login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) {
             return next(err);
@@ -111,12 +111,12 @@ app.post('/login', function(req, res, next) {
             if (err) {
                 return next(err);
             }
-            return res.redirect('./index.html'); // if login succesful
+            return res.redirect('./here.html'); // if login succesful
         });
     })(req, res, next);
 });
 
-app.use('/register', (req, res, next) => {
+app.use('./register', (req, res, next) => {
     console.log(req.body);
     bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
         // Store hash in your password DB.
@@ -128,7 +128,7 @@ app.use('/register', (req, res, next) => {
 
 });
 
-app.post('/register', function(req, res, next) {
+app.post('./register', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) {
             return next(err);
@@ -142,7 +142,7 @@ app.post('/register', function(req, res, next) {
             if (err) {
                 return next(err);
             }
-            return res.redirect('./front.html'); // if login succesful
+            return res.redirect('./here.html'); // if login succesful
         });
     })(req, res, next);
 });
@@ -158,7 +158,7 @@ app.get('/', (req, res) => {
         console.log('req.user', req.user);
         // if user is not logged
         if (req.user !== undefined) {
-            res.redirect(301, 'front.html');
+            res.redirect(301, 'here.html');
         } else {
             res.redirect(301, 'login.html');
         }
@@ -176,7 +176,7 @@ const cb = (result, res) => {
 // serve static files
 app.use(express.static('public'));
 // serve node_modules
-app.use('/modules', express.static('node_modules'));
+app.use('./modules', express.static('node_modules'));
 
 // respond to post and save file
 app.post('/upload', upload.single('mediafile'), (req, res, next) => {

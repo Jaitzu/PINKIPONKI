@@ -85,7 +85,7 @@ var keskitys = 0;
 
 function baall() {
 //käyttäjän ja markerin interaktion käynnistäminen
-    var minDist = 10,
+    var minDist = 10000,
         markerDist,
         // get all objects added to the map
         objects = map.getObjects(),
@@ -123,11 +123,7 @@ baall();
     }
 
 
-// When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        const pallomodaali = document.getElementById("myModal");
-        pallomodaali.style.display = "none";
-    };
+
 //menun avaus ja sulkeminen
 var timesClicked =0;
 function xFunction(x) {

@@ -81,7 +81,7 @@ body{
     flex-wrap: wrap;
     flex-direction: column;
     background-color: #333333;
-    flex-flow: wrap;
+
 
 }
 .menulink{
@@ -98,6 +98,8 @@ body{
 }
 #logout{
     height: 30%;
+    min-width: 100%;
+    max-width: 100%;
 }
 
 #kaappausModal {
@@ -195,24 +197,6 @@ img{
 #keskitys {
     z-index: 1;
     background-color: gray;
-    border: none;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin: 4px 2px;
-    border-radius: 100%;
-    position: absolute;
-    width: 9ex;
-    height: 9ex;
-    align-self: flex-end;
-    float: right;
-}
-#keskitys:hover{
-    z-index: 1;
-    background-color: black;
     border: none;
     color: white;
     padding: 20px;

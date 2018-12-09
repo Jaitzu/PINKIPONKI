@@ -7,6 +7,138 @@ console.log('userID is', userID);
 document.querySelector('#reset-button').addEventListener('click', () => {
     update(originalData);
 });
+//----camera-----
+let picurl;
+document.addEventListener('DOMContentLoaded', function () {
+
+    const video = document.querySelector('#camera-stream');
+    const image = document.querySelector('#snap');
+    const start_camera = document.querySelector('#start-camera');
+    const controls = document.querySelector('.controls');
+    const take_photo_btn = document.querySelector('#take-photo');
+    const delete_photo_btn = document.querySelector('#delete-photo');
+    const download_photo_btn = document.querySelector('#download-photo');
+    const error_message = document.querySelector('#error-message');
+
+    //Selain kohtainen kysely kameran toiminnalisuudesta
+    navigator.getMedia = (navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia);
+
+
+    if (!navigator.getMedia) {
+        displayErrorMessage("Your browser doesn't have support for the navigator.getUserMedia interface.");
+    } else {
+        // Kamera lupa
+        navigator.getMedia(
+            {video: true},
+
+            function (stream) {
+                video.src = window.URL.createObjectURL(stream);
+
+                // Kameran stream päälle
+                video.play();
+                video.onplay = function () {
+                    showVideo();
+                };
+            },
+            function (err) {
+                displayErrorMessage("There was an error with accessing the camera stream: " + err.name, err);
+            }
+        );
+
+    }
+
+    //Nappula kameran käynnistämiseen
+    start_camera.addEventListener("click", function (evt) {
+        evt.preventDefault();
+        video.play();
+        showVideo();
+
+    });
+
+    take_photo_btn.addEventListener("click", function (evt) {
+        evt.preventDefault();
+
+        var snap = takeSnapshot();
+
+        image.setAttribute('src', snap);
+        image.classList.add("visible");
+
+        // Nappulat hide/show
+        delete_photo_btn.classList.remove("disabled");
+        download_photo_btn.classList.remove("disabled");
+
+        download_photo_btn.href = snap;
+        video.pause();
+
+    });
+
+    //Delete nappula toiminnalisuus
+    delete_photo_btn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        image.setAttribute('src', "");
+        image.classList.remove("visible");
+
+        delete_photo_btn.classList.add("disabled");
+        download_photo_btn.classList.add("disabled");
+
+        video.play();
+    });
+
+    //Ikonit näkyville
+    function showVideo() {
+        hideUI();
+        video.classList.add("visible");
+        controls.classList.add("visible");
+    }
+
+    function takeSnapshot() {
+        const hidden_canvas = document.querySelector('canvas');
+          const  context = hidden_canvas.getContext('2d');
+
+        const width = video.videoWidth,
+            height = video.videoHeight;
+        //canvas ja kuva samoihin kokoihin
+        if (width && height) {
+            hidden_canvas.width = width;
+            hidden_canvas.height = height;
+
+            context.drawImage(video, 0, 0, width, height);
+
+            // Canvas URL:iksi
+            picurl = hidden_canvas.toDataURL('image/png');
+            return hidden_canvas.toDataURL('image/png');
+
+
+        }
+    }
+
+    function displayErrorMessage(error_msg, err) {
+        err = err || "";
+        if (err) {console.error(err);}
+
+        error_message.innerText = error_msg;
+
+        hideUI();
+        error_message.classList.add("visible");
+    }
+
+    //Hide/show elementit
+    function hideUI() {
+        controls.classList.remove("visible");
+        start_camera.classList.remove("visible");
+        video.classList.remove("visible");
+        snap.classList.remove("visible");
+        error_message.classList.remove("visible");
+    }
+
+});
+//----
+
+
 
 const createArticle = (image, title, texts, id, user) => {
     console.log('user', user);
@@ -98,7 +230,7 @@ const update = (items) => {
 
 const frm = document.querySelector('#mediaform');
 const updatefrm = document.querySelector('#updateform');
-const list = document.querySelector('#imagelist');
+const list = document.querySelector('#pallokuva');
 const searchfrm = document.querySelector('#photohaku');
 /*
 const img = document.querySelector('#image');
@@ -106,14 +238,7 @@ const aud = document.querySelector('#aud');
 const vid = document.querySelector('#vid');
 */
 
-const fillUpdate = (image) => {
-  console.log(image);
-  document.querySelector('#updateform input[name=mID]').value = image.mID;
-  document.querySelector('#updateform input[name=category]').value = image.category;
-  document.querySelector('#updateform input[name=title]').value = image.title;
-  document.querySelector('#updateform input[name=details]').value = image.details;
-  document.querySelector('#updateform button').removeAttribute('disabled');
-};
+
 
 const makeHTML = (images) => {
     // clear list before adding upated data
@@ -130,25 +255,35 @@ const makeHTML = (images) => {
         });
         li.appendChild(img);
 
+        for (var wi=0; wi<kuvat.length; wi++) {
+            const karu = document.getElementsByTagName('div')[1];
+            const divi = document.createElement("div");
+            const p = document.createElement("p");
+            divi.setAttribute('class', 'slaidi');
+            console.log('in');
+            divi.innerHTML = "<h2>" + uID[wi] + "</h2>" + "<img src=thumbs/" + kuvat[wi] + ">";
+            karu.appendChild(divi);
+            divi.appendChild(p);
+        }
 
-        const a = document.createElement('a');
-        a.innerText = 'delete';
-        a.setAttribute('href', '/images/' + image.mID);
-        a.addEventListener('click', (evt) => {
-            evt.preventDefault();
-            const url = evt.target.href;
-            const settings = {
-                method: 'delete',
-            };
-            fetch(url, settings).then((response)=>{
-                return response.json();
-            }).then((json)=>{
-                console.log(json);
-                getImages();
-            });
-        });
-        li.appendChild(a);
-        list.appendChild(li);
+        console.log('täh');
+
+        let slaidiIndeksi = 0;
+        slideshow();
+
+        function slideshow() {
+            const slaidit = document.getElementsByClassName('slaidi');
+            for (var io=0; io<slaidit.length; io++) {
+                slaidit[io].style.display = "none";
+            }
+            slaidiIndeksi++;
+            if(slaidiIndeksi>slaidit.length) {slaidiIndeksi = 1}
+            slaidit[slaidiIndeksi-1].style.display = "block";
+            setTimeout(slideshow, 2000);
+        }
+
+
+
     });
 }
 
@@ -164,7 +299,7 @@ const getImages = () => {
 
 const sendForm = (evt) => {
   evt.preventDefault();
-  const fd = new FormData(frm);
+  const fd = new FormData(picurl);
   const settings = {
     method: 'post',
     body: fd,
