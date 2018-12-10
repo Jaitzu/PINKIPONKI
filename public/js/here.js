@@ -148,7 +148,7 @@ function xFunction(x) {
 
 
 }
-
+//-----kartan keskitys----
 function keski(){
     keskitys = 0;
 }
@@ -159,3 +159,16 @@ mappi.onclick = function() {
     keskitys = 1;
 
 } ;
+
+//---camera
+function kamera(){
+    const cameramodaali = document.getElementById("cameraModal");
+    const start =document.getElementById("start-camera");
+    const video =document.getElementById("camera-stream");
+    const snap =document.getElementById("snap");
+    cameramodaali.style.display = "flex";
+    start.style.display = "block";
+    video.style.display = "block";
+    snap.style.display = "block"
+
+}

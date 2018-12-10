@@ -68,7 +68,7 @@ passport.use(new LocalStrategy(
         const doLogin = (username, password) => {
             return new Promise((resolve, reject) => {
                 db.login([username], connection, (result) => {
-                    bcrypt.compare(password, result[0].passwd, function(err, res) {
+                    bcrypt.compare(password, result[0].password, function(err, res) {
                         // res == true
                         if (res) {
                             resolve(result);
@@ -86,7 +86,7 @@ passport.use(new LocalStrategy(
                 return done(null, false);
             } else {
                 console.log('done');
-                result[0].passwd = ''; // remove password from user's data
+                result[0].password = ''; // remove password from user's data
                 return done(null, result[0]); // result[0] is user's data, accessible as req.user
             }
         });
@@ -97,13 +97,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // authentication with custom callback (http://www.passportjs.org/docs/authenticate/)
-app.post('./login', function(req, res, next) {
+app.post('/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) {
             return next(err);
         }
         if (!user) { // if login not happening
-            return res.redirect('./login.html');
+            return res.redirect('/node/login.html');
         }
         req.logIn(user, function(err) {
             // send userID as cookie:
@@ -116,7 +116,7 @@ app.post('./login', function(req, res, next) {
     })(req, res, next);
 });
 
-app.use('./register', (req, res, next) => {
+app.use('/register', (req, res, next) => {
     console.log(req.body);
     bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
         // Store hash in your password DB.
@@ -128,7 +128,7 @@ app.use('./register', (req, res, next) => {
 
 });
 
-app.post('./register', function(req, res, next) {
+app.post('/register', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) {
             return next(err);
@@ -176,7 +176,7 @@ const cb = (result, res) => {
 // serve static files
 app.use(express.static('public'));
 // serve node_modules
-app.use('./modules', express.static('node_modules'));
+app.use('/modules', express.static('node_modules'));
 
 // respond to post and save file
 app.post('/upload', upload.single('mediafile'), (req, res, next) => {
@@ -190,11 +190,12 @@ app.use('/upload', (req, res, next) => {
 });
 
 // create medium image
+/*
 app.use('/upload', (req, res, next) => {
     resize.doResize(req.file.path, 640,
         './public/medium/' + req.file.filename + '_medium', next);
 });
-
+*/
 // get coordinates
 app.use('/upload', (req, res, next) => {
     exif.getCoordinates(req.file.path).then(coords => {
@@ -211,14 +212,14 @@ app.use('/upload', (req, res, next) => {
 app.use('/upload', (req, res, next) => {
     console.log('insert is here');
     const data = [
-        req.body.category,
-        req.body.title,
         req.body.details,
         req.file.filename + '_thumb',
-        req.file.filename + '_medium',
         req.file.filename,
         req.coordinates,
+        "1",
+        "1"
     ];
+    console.log('saaaakeli' + data);
     db.insert(data, connection, next);
 });
 
@@ -232,29 +233,12 @@ app.get('/images', (req, res) => {
     db.select(connection, cb, res);
 });
 
-//update image
-app.patch('/images', (req, res) => {
-    console.log('body', req.body);
-    const update = db.update(req.body, connection);
-    console.log('update', update);
-    res.send('{"status": "OK"}');
-});
 //delete image
 app.delete('/images/:mID', (req, res) => {
     const mID = [req.params.mID];
     db.del(mID, connection);
     res.send('{"status": "delete OK"}');
 });
-//image ctegory search
-app.get('/search/:category', (req, res) => {
-
-    const category = [req.params.category];
-    console.log('kategoria', category[0]);
-    db.search(category, connection, cb, res);
-    console.log('search');
-    // res.send('{"status": "suattaapi olla että toimii suattaapi olla että ei"}');
-});
-
 
 // https setup
 app.set('trust proxy');

@@ -16,7 +16,7 @@ const connect = () => {
 const select = (connection, callback, res) => {
     // simple query
     connection.query(
-        'SELECT * FROM bc_media',
+        'SELECT * FROM bb_media',
         (err, results, fields) => {
             // console.log(results); // results contains rows returned by server
             // console.log(fields); // fields contains extra meta data about results, if available
@@ -25,26 +25,12 @@ const select = (connection, callback, res) => {
         },
     );
 };
-//------minunsähläystätätätätätättäätät
-const search = (data, connection, callback, res) => {
-    // simple query
-    console.log('data', data)
-    connection.execute(
-        'SELECT * FROM bc_media WHERE category = ?',
-        data,
-        (err, results, fields) => {
-            // console.log(results); // results contains rows returned by server
-            // console.log(fields); // fields contains extra meta data about results, if available
-            console.log(err);
-            callback(results, res);
-        },
-    );
-};
+
 //------------------------------
 const insert = (data, connection, callback) => {
     // simple query
     connection.execute(
-        'INSERT INTO bc_media (category, title, details, thumbnail, image, original, coordinates) VALUES (?, ?, ?, ?, ?, ?, ?);',
+        'INSERT INTO bb_media ( details, thumbnail, original, coordinates, ball_ID, uID) VALUES (?,?, ?, ?, ?, ?);',
         data,
         (err, results, fields) => {
             // console.log(results); // results contains rows returned by server
@@ -55,22 +41,11 @@ const insert = (data, connection, callback) => {
     );
 };
 
-const update = (data, connection) => {
-    // simple query
-    return connection.execute(
-        'UPDATE bc_media SET category = ?, title = ?, details = ? WHERE mID = ?;',
-        data,
-        (err, results, fields) => {
-            // console.log(results); // results contains rows returned by server
-            // console.log(fields); // fields contains extra meta data about results, if available
-            console.log(err);
-        },
-    );
-};
+
 const del = (data, connection) => {
     // simple query
     return connection.execute(
-        'DELETE FROM bc_media WHERE mID = ?;',
+        'DELETE FROM bb_media WHERE mID = ?;',
         data,
         (err, results, fields) => {
             console.log(results); // results contains rows returned by server
@@ -82,7 +57,7 @@ const del = (data, connection) => {
 const login = (data, connection, callback) => {
     // simple query
     connection.execute(
-        'SELECT * FROM bc_users WHERE email = ?;',
+        'SELECT * FROM bb_user WHERE email = ?;',
         data,
         (err, results, fields) => {
             console.log(results); // results contains rows returned by server
@@ -96,7 +71,7 @@ const login = (data, connection, callback) => {
 const register = (data, connection, callback) => {
     // simple query
     connection.execute(
-        'INSERT INTO bc_users (email, passwd) VALUES (?, ?);',
+        'INSERT INTO bb_user (email, password) VALUES (?, ?);',
         data,
         (err, results, fields) => {
             console.log(results); // results contains rows returned by server
@@ -111,9 +86,7 @@ module.exports = {
     connect: connect,
     select: select,
     insert: insert,
-    update: update,
     del: del,
-    search: search,
     login: login,
     register: register,
 };

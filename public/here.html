@@ -9,6 +9,9 @@
     <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css" />
     <link rel="stylesheet" type="text/css" href="css/here.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/cameraStyle.css">
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
@@ -29,19 +32,17 @@
     <div id="kaappauscontent">
         <div id="kaapausList">
             <div id="pallokuva">
-            <img src ="http://placekitten.com/200/300">
-            </div>
-            <div id="kuvatekstikotelo">
-                <p id="kuvateksti">Some text in the Modal..</p>
+
             </div>
             <form action="/upload" id="mediaform">
-
-                    <input class="addpic" type="file" name="mediafile" accept="image/*">
-
+                <input type="text" name="details" placeholder="Details">
                 <br>
-                <button class="addpic" type="submit">Submit</button>
+                <label>Kuva, ääni tai video
+                    <input type="file" name="mediafile" accept="audio/*,video/*,image/*">
+                </label>
+                <br>
+                <button type="submit">Submit</button>
             </form>
-            <a href="camera.html" class="menulink">Profiili</a>
             <button  id="potku" onclick="Cordinates()">SEND THE BALL AWAY!!!!</button>
         </div>
 
@@ -57,13 +58,14 @@
         <div id="menuList">
             <a href="#home" class="menulink">Profiili</a>
             <a href="#about" class="menulink">About</a>
-            <button id="logout">Logout</button>
+            <a href="/logout" class="menulink">Logout</a>
 
         </div>
 
     </div>
 
 </div>
+
 
 
 <script src="js/here.js"></script>
