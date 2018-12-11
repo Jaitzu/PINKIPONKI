@@ -13,7 +13,7 @@ var coordinates = { //kartan keskityksen koordinaatit
     lat: 52.530974, // HERE HQ in Berlin, Germany
     lng: 13.384944
 };
-
+console.log(coordinates);
 var mapOptions = {
     center: coordinates,
     zoom: 18,
@@ -37,7 +37,7 @@ var iconUrl = 'honri.png';//MArkerin luonti
 
 var iconOptions = {
 // The icon's size in pixel:
-    size: new H.math.Size(36, 44),
+    size: new H.math.Size(46, 54),
 // The anchorage point in pixel,
 // defaults to bottom-center
     anchor: new H.math.Point(14, 34),
@@ -48,25 +48,21 @@ var markerOptions = {
 };
 const marker = new H.map.Marker(coordinates, markerOptions);
 map.addObject(marker);
-const cords= {lat:60.221121, lng:24.804828};
+const cords= {lat:0, lng:0};
 const pallo = new H.map.Marker(cords);
 map.addObject(pallo);
-
-
-console.log(coordinates);
-console.log(cords + 'Täsäsäsäsäsäs');
 //pallon uudet koordinaatit
-var korts={
-};
-function Cordinates() {
-    korts = {
-        lat: 60.221 + Math.random() * 0.001,
-        lng: 24.804 + Math.random() * 0.001
 
-    };
-    pallo.setPosition(korts);
-    console.log('vittu' +cords)
-}
+const getCords = () => {
+    fetch('./koordinaatit').then((response) => {
+        return response.json();
+    }).then((json) => {
+        const kords = JSON.parse(json[0].ball_coordinates);
+        pallo.setPosition(kords);
+    });
+};
+setInterval(getCords, 5000);
+
 var keskitys = 0;
 //markerin ja pallon sijainnin päivitys
     function updatePosition(event) {
@@ -85,7 +81,7 @@ var keskitys = 0;
 
 function baall() {
 //käyttäjän ja markerin interaktion käynnistäminen
-    var minDist = 10000,
+    var minDist = 15000,
         markerDist,
         // get all objects added to the map
         objects = map.getObjects(),
@@ -100,11 +96,14 @@ function baall() {
 
         if (markerDist < minDist) {
             markerDist = minDist;
+
             modaali();
-            console.log('pallo on napattu saatana');
+
+
+
         }
     }
-    setInterval(baall, 4000);
+    setInterval(baall, 5000);
 }
 
 baall();
@@ -119,6 +118,8 @@ baall();
     function modaali() {
         const pallomodaali = document.getElementById("kaappausModal");
         pallomodaali.style.display = "flex";
+
+
 
     }
 

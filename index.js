@@ -240,6 +240,31 @@ app.delete('/images/:mID', (req, res) => {
     res.send('{"status": "delete OK"}');
 });
 
+app.get('/koordinaatit',(req, res) => {
+    db.getCords(connection, cb, res);
+    console.log(res);
+    //res.send('{"status": "getCords OK"}');
+});
+
+app.patch('/paivita', (req, res) => {
+    const data = {
+        lat: 60.221 + parseInt(Math.random() * 0.001),
+        lng: 24.804 + parseInt(Math.random() * 0.001)
+    };
+    console.log(data);
+    db.updCords([data], connection);
+    res.send('{"status": "updCords OK"}');
+});
+
+//UPVOTE
+app.patch('/vote', loggedIn, (req, res) => {
+    console.log('body', req.body);
+    const image = req.body.imId;
+    const upVote = db.upVote([image], connection);
+    console.log('upvote', upVote);
+    res.send('{"status": "upVote OK"}');
+});
+
 // https setup
 app.set('trust proxy');
 const sslkey = fs.readFileSync('/etc/pki/tls/private/ca.key');

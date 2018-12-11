@@ -82,6 +82,55 @@ const register = (data, connection, callback) => {
     );
 };
 
+const getCords = (connection, callback, res) => {
+    connection.query(
+        'SELECT ball_coordinates FROM bb_ball WHERE ball_ID=1;',
+        (err, results) => {
+            console.log("koord" + results);
+            console.log(err);
+            callback(results, res);
+        }
+    )
+};
+
+const updCords = (data, connection) => {
+    connection.execute(
+        'UPDATE `bb_ball` SET `ball_coordinates`= ? WHERE ball_ID = 1;',
+        data,
+        (err, results) => {
+            console.log(results);
+            console.log(err);
+        }
+    )
+};
+
+const upVote = (data, connection) => {
+    // simple query
+    connection.execute(
+        'UPDATE bb_media SET points = points + 1 WHERE media_ID = ?;',
+        data,
+        (err, results, fields) => {
+            // console.log(results); // results contains rows returned by server
+            // console.log(fields); // fields contains extra meta data about results, if available
+            console.log(err);
+        },
+    );
+};
+
+const downVote = (data, connection) => {
+    // simple query
+    connection.execute(
+        'UPDATE bb_media SET points = points - 1 WHERE media_ID = ? AND userID = ?;',
+        data,
+        (err, results, fields) => {
+            // console.log(results); // results contains rows returned by server
+            // console.log(fields); // fields contains extra meta data about results, if available
+            console.log(err);
+        },
+    );
+};
+
+
 module.exports = {
     connect: connect,
     select: select,
@@ -89,4 +138,8 @@ module.exports = {
     del: del,
     login: login,
     register: register,
+    getCords: getCords,
+    updCords: updCords,
+    upVote: upVote,
+    downVote: downVote,
 };

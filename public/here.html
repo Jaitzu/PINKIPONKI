@@ -24,28 +24,30 @@
 <div id="mapid">
 
 </div>
-<button  id="keskitys" onclick="keski()">50%</button>
+<button  id="keskitys" onclick="keski()"></button>
 <!-- The Modal -->
 <div id="kaappausModal" class="modal">
 
     <!-- Modal content -->
     <div id="kaappauscontent">
-        <div id="kaapausList">
             <div id="pallokuva">
 
+                <!-- Next and previous buttons -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
             </div>
-            <form action="/upload" id="mediaform">
-                <input type="text" name="details" placeholder="Details">
+            <div id="tekstiä">
+            <form action="./upload" id="mediaform">
+                <input id="comment" type="text" name="details" placeholder="comment">
                 <br>
-                <label>Kuva, ääni tai video
-                    <input type="file" name="mediafile" accept="audio/*,video/*,image/*">
+                <label>
+                    <input id="pic" type="file" name="mediafile" accept="audio/*,video/*,image/*">
                 </label>
                 <br>
-                <button type="submit">Submit</button>
+                <button id="send" onclick="hide()" type="submit"></button>
             </form>
-            <button  id="potku" onclick="Cordinates()">SEND THE BALL AWAY!!!!</button>
-        </div>
-
+                <button id='potku' onclick='paavita()'></button>
+            </div>
     </div>
 
 </div>
@@ -58,7 +60,7 @@
         <div id="menuList">
             <a href="#home" class="menulink">Profiili</a>
             <a href="#about" class="menulink">About</a>
-            <a href="/logout" class="menulink">Logout</a>
+            <a href="./logout" class="menulink">Logout</a>
 
         </div>
 

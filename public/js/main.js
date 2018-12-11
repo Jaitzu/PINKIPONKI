@@ -109,6 +109,9 @@ const vid = document.querySelector('#vid');
 
 let kuvat = [];
 let uID = [];
+let mID = [];
+let likes =[];
+let slideIndex = 1;
 const makeHTML = (images) => {
     // clear list before adding upated data
     list.innerHTML = '';
@@ -118,50 +121,83 @@ const makeHTML = (images) => {
     karu.innerHTML="";
     console.log('slaidit tyhjenetty');
     images.forEach((image) => {
-        const li = document.createElement('li');
-        const title = document.createElement('h3');
-        title.innerHTML = image.title;
-        li.appendChild(title);
-        const img = document.createElement('img');
         kuvat.push(image.thumbnail);
-        uID.push(image.uID);
-        img.src = 'thumbs/' + image.thumbnail;
-        img.addEventListener('click', () => {
-            fillUpdate(image);
+        uID.push(image.details);
+        mID.push(image.media_ID);
+        likes.push(image.points);
         });
-        li.appendChild(img);
 
-        for (var wi=0; wi<kuvat.length; wi++) {
-            const divi = document.createElement("div");
-            const p = document.createElement("p");
-            divi.setAttribute('class', 'slaidi');
-            console.log('in');
-            divi.innerHTML = "<h2>" + uID[wi] + "</h2>" + "<img src=thumbs/" + kuvat[wi] + ">";
-            karu.appendChild(divi);
-            divi.appendChild(p);
+
+    for (var wi=0; wi<kuvat.length; wi++) {
+        const divi = document.createElement("div");
+        const p = document.createElement("p");
+        divi.setAttribute('class', 'slaidi');
+        divi.innerHTML = "<img src=thumbs/" + kuvat[wi] + "><h2>" + uID[wi] + "</h2><h2 class='like'>Likes: " + likes[wi] + "<h2><button class='uppi' onclick='upVote("+ mID[wi] +")'></button>";
+        karu.appendChild(divi);
+        divi.appendChild(p);
+    }
+
+    karu.innerHTML += '<a class="prev" onclick="plusSlides(-1)">&#10094;</a>';
+    karu.innerHTML += '<a class="next" onclick="plusSlides(1)">&#10095;</a>';
+
+
+    showSlides(slideIndex);
+
+    /*
+    let slaidiIndeksi = 0;
+    slideshow();
+
+    function slideshow() {
+        const slaidit = document.getElementsByClassName('slaidi');
+        for (var io=0; io<slaidit.length; io++) {
+            slaidit[io].style.display = "none";
         }
-
-        console.log('täh');
-
-        let slaidiIndeksi = 0;
-        slideshow();
-
-        function slideshow() {
-            const slaidit = document.getElementsByClassName('slaidi');
-            for (var io=0; io<slaidit.length; io++) {
-                slaidit[io].style.display = "none";
-            }
-            slaidiIndeksi++;
-            if(slaidiIndeksi>slaidit.length) {slaidiIndeksi = 1}
-            slaidit[slaidiIndeksi-1].style.display = "block";
-            setTimeout(slideshow, 2000);
-        }
+        slaidiIndeksi++;
+        if(slaidiIndeksi>slaidit.length) {slaidiIndeksi = 1}
+        slaidit[slaidiIndeksi-1].style.display = "block";
+        clearInterval(slideshow);
+        setTimeout(slideshow, 2000);
+    }
+*/
+};
 
 
 
-
-    });
+function plusSlides(n) {
+    showSlides(slideIndex += n);
 }
+
+function showSlides(n) {
+    let slaidit = document.getElementsByClassName("slaidi");
+    if (n > slaidit.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slaidit.length}
+    for (var i = 0; i < slaidit.length; i++) {
+        slaidit[i].style.display = "none";
+    }
+    slaidit[slideIndex-1].style.display = "block";
+}
+
+const upVote = (image) => {
+    const data = JSON.stringify({
+        imId: image,
+    });
+    console.log(image);
+    const settings = {
+        method: 'PATCH',
+        body: data,
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+    };
+    // app.patch('/images'.... needs to be implemented to index.js (remember body-parser)
+    fetch('./vote', settings).then((response) => {
+        return response.json();
+    }).then((json) => {
+        console.log(json);
+        getData();
+    });
+
+};
 
 const getImages = () => {
   fetch('./images').then((response) => {
@@ -191,7 +227,37 @@ const sendForm = (evt) => {
   });
 };
 
+const paavita = () => {
+    const pallomodaali = document.getElementById("kaappausModal");
+    const media = document.getElementById("mediaform");
+    const kuva = document.getElementById("pallokuva");
+    const potku = document.getElementById("potku");
+    media.style.display ="block";
+    kuva.style.display="none";
+    potku.style.display="none";
+    pallomodaali.style.display = "none";
+    const settings = {
+        method: 'PATCH'
+        }
 
+    // app.patch('/images'.... needs to be implemented to index.js (remember body-parser)
+    fetch('./paivita', settings).then((response) => {
+        return response.json();
+    }).then((json) => {
+        console.log(json);
+
+    })
+
+};
+
+function hide(){
+    const media = document.getElementById("mediaform");
+    const kuva = document.getElementById("pallokuva");
+    const potku = document.getElementById("potku");
+    media.style.display ="none";
+    kuva.style.display="flex";
+    potku.style.display="block";
+}
 
 
 
