@@ -15,7 +15,7 @@ a{
     max-height: 30ex;
 }
 img{
-    max-height: 80%;
+    max-height: 50%;
     max-width: 100%;
 }
 .like{
@@ -39,12 +39,16 @@ img{
     font-size: 12px;
     margin: 4px 2px;
     border-radius: 100%;
+    position: absolute;
+    bottom: 8px;
+    right: 12ex;
+    /*
+    position: absolute;
+    */
     width: 9ex;
     height: 9ex;
-
-
-    opacity: 0.8;
-
+    align-self: flex-end;
+    float: right;
 }
 .container {
     display: inline-block;

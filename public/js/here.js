@@ -61,7 +61,7 @@ const getCords = () => {
         pallo.setPosition(kords);
     });
 };
-setInterval(getCords, 5000);
+setInterval(getCords, 6000);
 
 var keskitys = 0;
 //markerin ja pallon sijainnin päivitys
@@ -81,7 +81,7 @@ var keskitys = 0;
 
 function baall() {
 //käyttäjän ja markerin interaktion käynnistäminen
-    var minDist = 15000,
+    var minDist = 15,
         markerDist,
         // get all objects added to the map
         objects = map.getObjects(),
@@ -103,7 +103,7 @@ function baall() {
 
         }
     }
-    setInterval(baall, 5000);
+    setInterval(baall, 6000);
 }
 
 baall();
