@@ -189,13 +189,7 @@ app.use('/upload', (req, res, next) => {
         './public/thumbs/' + req.file.filename + '_thumb', next);
 });
 
-// create medium image
-/*
-app.use('/upload', (req, res, next) => {
-    resize.doResize(req.file.path, 640,
-        './public/medium/' + req.file.filename + '_medium', next);
-});
-*/
+
 // get coordinates
 app.use('/upload', (req, res, next) => {
     exif.getCoordinates(req.file.path).then(coords => {
@@ -248,8 +242,8 @@ app.get('/koordinaatit',(req, res) => {
 
 app.patch('/paivita', (req, res) => {
     const data = {
-        lat: 60.221 + parseInt(Math.random() * 0.001),
-        lng: 24.804 + parseInt(Math.random() * 0.001)
+        lat: 60.221 + Math.random() * 0.001,
+        lng: 24.804 + Math.random() * 0.001
     };
     console.log(data);
     db.updCords([data], connection);

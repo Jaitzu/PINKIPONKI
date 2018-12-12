@@ -1,7 +1,7 @@
 'use strict';
 const mysql = require('mysql2');
 
-
+//tietokantayhteys
 const connect = () => {
     // create the connection to database
     const connection = mysql.createConnection({
@@ -12,7 +12,7 @@ const connect = () => {
     });
     return connection;
 };
-
+//kuvien haku tietokannasta
 const select = (connection, callback, res) => {
     // simple query
     connection.query(
@@ -26,7 +26,7 @@ const select = (connection, callback, res) => {
     );
 };
 
-//------------------------------
+//kuvien lisääminen tietokantaan
 const insert = (data, connection, callback) => {
     // simple query
     connection.execute(
@@ -41,7 +41,7 @@ const insert = (data, connection, callback) => {
     );
 };
 
-
+//delete
 const del = (data, connection) => {
     // simple query
     return connection.execute(
@@ -54,6 +54,7 @@ const del = (data, connection) => {
         },
     );
 };
+//sisäänkirjautuminen
 const login = (data, connection, callback) => {
     // simple query
     connection.execute(
@@ -67,7 +68,7 @@ const login = (data, connection, callback) => {
         },
     );
 };
-
+//käyttäjätunnuksen luonti tietokantaan
 const register = (data, connection, callback) => {
     // simple query
     connection.execute(
@@ -81,7 +82,7 @@ const register = (data, connection, callback) => {
         },
     );
 };
-
+//koordinaattien haku tietokannasta
 const getCords = (connection, callback, res) => {
     connection.query(
         'SELECT ball_coordinates FROM bb_ball WHERE ball_ID=1;',
@@ -92,7 +93,7 @@ const getCords = (connection, callback, res) => {
         }
     )
 };
-
+//koordinaattien päivitys tietokantaan
 const updCords = (data, connection) => {
     connection.execute(
         'UPDATE `bb_ball` SET `ball_coordinates`= ? WHERE ball_ID = 1;',
@@ -103,7 +104,7 @@ const updCords = (data, connection) => {
         }
     )
 };
-
+//tykkäys
 const upVote = (data, connection) => {
     // simple query
     connection.execute(
@@ -116,7 +117,7 @@ const upVote = (data, connection) => {
         },
     );
 };
-
+//future feature
 const downVote = (data, connection) => {
     // simple query
     connection.execute(

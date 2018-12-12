@@ -48,9 +48,11 @@ var markerOptions = {
 };
 const marker = new H.map.Marker(coordinates, markerOptions);
 map.addObject(marker);
+//"elektronisen pullon" markerin luonti
 const cords= {lat:0, lng:0};
 const pallo = new H.map.Marker(cords);
 map.addObject(pallo);
+
 //pallon uudet koordinaatit
 
 const getCords = () => {
@@ -71,6 +73,7 @@ var keskitys = 0;
             lng: event.coords.longitude
         };
         marker.setPosition(HEREHQcoordinates);
+            //kartan keskitys kun keskitysnappia on painettu
         if(keskitys === 0) {
             map.setCenter(HEREHQcoordinates);
         }
@@ -81,7 +84,7 @@ var keskitys = 0;
 
 function baall() {
 //käyttäjän ja markerin interaktion käynnistäminen
-    var minDist = 15,
+    var minDist = 10,
         markerDist,
         // get all objects added to the map
         objects = map.getObjects(),
@@ -90,7 +93,7 @@ function baall() {
         i;
 
 
-// iterate over objects and calculate distance between them
+// objektien välisten etäisyyden mittaaminen
     for (i = 1; i < len; i += 1) {
         markerDist = objects[i].getPosition().distance((marker.getPosition()));
 
@@ -110,11 +113,6 @@ baall();
 
 
 //PALLONKAAPPAUS MODAALI
-// Get the modal
-    var modal = document.getElementById('myModal');
-// Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-// When the user clicks on the button, open the modal
     function modaali() {
         const pallomodaali = document.getElementById("kaappausModal");
         pallomodaali.style.display = "flex";
@@ -154,22 +152,10 @@ function keski(){
     keskitys = 0;
 }
 
-// When the user clicks anywhere on the map its stops centering the screen to your location until user clicks the centering button
+// kartta lopettaa keskityksen käyttäjän koskettua karttaan
 const mappi =document.getElementById("mapid")
 mappi.onclick = function() {
     keskitys = 1;
 
 } ;
 
-//---camera
-function kamera(){
-    const cameramodaali = document.getElementById("cameraModal");
-    const start =document.getElementById("start-camera");
-    const video =document.getElementById("camera-stream");
-    const snap =document.getElementById("snap");
-    cameramodaali.style.display = "flex";
-    start.style.display = "block";
-    video.style.display = "block";
-    snap.style.display = "block"
-
-}
