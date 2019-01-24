@@ -1,0 +1,9 @@
+The bug was in the app was the Marker positon in app.js line 80. I changed it from  {[loc.position.lat,loc.position.lon,]} to {[loc.position.lon,loc.position.lat]}.
+
+I added a popups to the markers and moved the onClick=() => setSelectedLocation(loc.info.id)} function from the marker to a <H1> element to app.js line 87. The  element displayed the name of the area where the marker is.
+
+I also modified the info that is shown in the sidebar after activatin the onClick function. The side bar nnow shows the measurement stations name, the air tempareture, amount of rain and snow depth.
+
+
+ 
+
